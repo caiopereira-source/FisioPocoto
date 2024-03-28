@@ -73,9 +73,16 @@ export default function Login({changeStatus}) {
                     outlineColor='#048480'
                     activeOutlineColor='#048480'
                 />
-                <Button buttonColor='#048480' mode="contained" onPress={handleLogin}>
-                    Logar
+
+                <Button buttonColor='#048480' mode="contained" onPress={handleLogin} style={{width: '50%'}}>
+                    {type === 'login' ? 'Acessar' : 'Cadastrar' }
                 </Button>
+
+                <TouchableOpacity onPress={ () => setType(type => type === 'login' ? 'cadastrar' : 'login')} >
+                    <Text style={{ textAlign: 'center', marginTop: '20%'}}>
+                        {type === 'login' ? 'Criar uma conta?' : 'Já possuo uma conta!' }
+                    </Text>
+                </TouchableOpacity>
             </SafeAreaView>
         </View>
     )
