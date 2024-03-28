@@ -20,7 +20,6 @@ export default function Login({changeStatus}) {
     function handleLogin() {
         if (type === 'login') {
           // Aqui fazemos o login
-         
           const user = firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
               changeStatus(user.user.uid)

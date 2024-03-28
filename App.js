@@ -8,8 +8,8 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   if (!user) {
-    return <Login changeStatus={(user) => setUser(user)} />
-    //return <MenuTab/>
+    //return <Login changeStatus={(user) => setUser(user)} />
+    return <MenuTab/>
   }
 
   return <MenuTab/>

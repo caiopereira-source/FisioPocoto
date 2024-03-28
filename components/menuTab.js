@@ -1,7 +1,30 @@
+import React from 'react'
+import {Button} from 'react-native-paper'
+import {pt, registerTranslation } from 'react-native-paper-dates'
+/*registerTranslation('pt', {
+    save: 'Salvar',
+    selectSingle: 'Selecionar Data',
+    selectMultiple: 'Selecionar Datas',
+    selectRange: 'Selecionar Período',
+    notAccordingToDateFormat: (inputFormat) =>
+      `O Formato da data deve ser ${inputFormat}`,
+    mustBeHigherThan: (date) => `A data deve ser após ${date}`,
+    mustBeLowerThan: (date) => `A data deve ser antes de ${date}`,
+    mustBeBetween: (startDate, endDate) =>
+      `A data deve ser entre ${startDate} - ${endDate}`,
+    dateIsDisabled: 'Data Ocupada',
+    previous: 'Próxima',
+    next: 'Anterior',
+    close: 'Fechar',
+  })*/
+  registerTranslation('pt', pt)
+import { DatePickerModal } from 'react-native-paper-dates';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, StyleSheet, Text} from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import Icon from 'react-native-vector-icons/Feather';
+
 
 function HomeScreen() { 
     return ( 
@@ -11,11 +34,39 @@ function HomeScreen() {
     ); 
 } 
  
-function SchedulingScreen() { 
+function SchedulingScreen() {
+
+    const [date, setDate] = React.useState(undefined);
+    const [open, setOpen] = React.useState(false);
+
+    const onDismissSingle = React.useCallback(() => {
+        setOpen(false);
+    }, [setOpen]);
+
+    const onConfirmSingle = React.useCallback(
+        (params) => {
+        setOpen(false);
+        setDate(params.date);
+        },
+        [setOpen, setDate]
+  );
+
     return ( 
-        <View style={styles.container}> 
-            <Text></Text> 
-        </View> 
+        <SafeAreaProvider>
+            <View style={styles.container}> 
+                <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined">
+                    Selecione uma data para a consulta
+                </Button>
+                <DatePickerModal
+                locale="en"
+                mode="single"
+                visible={open}
+                onDismiss={onDismissSingle}
+                date={date}
+                onConfirm={onConfirmSingle}
+                />
+            </View>
+        </SafeAreaProvider> 
     ); 
 } 
  
