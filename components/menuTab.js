@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from 'react-native-paper'
+import {Button, Card} from 'react-native-paper'
 import {pt, registerTranslation } from 'react-native-paper-dates'
 /*registerTranslation('pt', {
     save: 'Salvar',
@@ -24,13 +24,19 @@ import { View, StyleSheet, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import Icon from 'react-native-vector-icons/Feather';
+import Products from './Products';
 
 
 function HomeScreen() { 
     return ( 
-        <View style={styles.container}> 
-            <Text></Text> 
-        </View> 
+        <Card>
+            <Card.Title title="..."/>
+            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+            <Card.Actions>
+                <Button>...</Button>
+            </Card.Actions>
+      </Card>
+
     ); 
 } 
  
@@ -72,9 +78,7 @@ function SchedulingScreen() {
  
 function NotificationsScreen() { 
     return ( 
-        <View style={styles.container}> 
-            <Text></Text> 
-        </View> 
+        <Products></Products>
     ); 
 } 
  
