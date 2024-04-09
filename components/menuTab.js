@@ -1,23 +1,8 @@
 import React from 'react'
+import { ScrollView } from 'react-native'
 import {Button, Card} from 'react-native-paper'
 import {pt, registerTranslation } from 'react-native-paper-dates'
-/*registerTranslation('pt', {
-    save: 'Salvar',
-    selectSingle: 'Selecionar Data',
-    selectMultiple: 'Selecionar Datas',
-    selectRange: 'Selecionar Período',
-    notAccordingToDateFormat: (inputFormat) =>
-      `O Formato da data deve ser ${inputFormat}`,
-    mustBeHigherThan: (date) => `A data deve ser após ${date}`,
-    mustBeLowerThan: (date) => `A data deve ser antes de ${date}`,
-    mustBeBetween: (startDate, endDate) =>
-      `A data deve ser entre ${startDate} - ${endDate}`,
-    dateIsDisabled: 'Data Ocupada',
-    previous: 'Próxima',
-    next: 'Anterior',
-    close: 'Fechar',
-  })*/
-  registerTranslation('pt', pt)
+registerTranslation('pt', pt)
 import { DatePickerModal } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, StyleSheet, Text} from 'react-native'; 
@@ -27,20 +12,37 @@ import Icon from 'react-native-vector-icons/Feather';
 import Products from './Products';
 
 
-function HomeScreen() { 
-    return ( 
-        <Card>
-            <Card.Title title="..."/>
-            <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-            <Card.Actions>
-                <Button>...</Button>
-            </Card.Actions>
-      </Card>
+function HomeScreen({navigation}) { 
+    return (
+        <ScrollView style={StyleSheet.container}>
+            <Card mode='contained' style={{marginHorizontal: '5%', marginVertical: '2%',}}>
+                <Card.Title style={{marginVertical: '1.8%'}} title="Reabilite-se: Reserve sua consulta com um fisioterapeuta." titleStyle={{fontFamily: 'Roboto'}} titleVariant='titleMedium' titleNumberOfLines={2} />
+                <Card.Cover style={{marginHorizontal: '2%'}} source={require('../assets/hero1.jpg')} />
+                <Card.Actions>
+                    <Button mode='contained' onPress={() => navigation.navigate('Agendamento')}>Agendar</Button>
+                </Card.Actions>
+            </Card>
 
+            <Card style={{marginHorizontal: '5%', marginVertical: '2%'}}>
+                <Card.Title style={{marginVertical: '1.8%'}} title="Cuide do seu corpo: Nossos profissionais são altamente qualificados" titleStyle={{fontFamily: 'Roboto'}} titleVariant='titleMedium' titleNumberOfLines={2} />
+                <Card.Cover style={{marginHorizontal: '2%'}} source={require('../assets/hero2.jpg')} />
+                <Card.Actions>
+                    <Button>Saiba mais</Button>
+                </Card.Actions>
+            </Card>
+
+            <Card style={{marginHorizontal: '5%', marginVertical: '2%'}}>
+                <Card.Title style={{marginVertical: '1.8%'}} title="Respeite seu Tempo: Reserve momentos para seu autocuidado." titleStyle={{fontFamily: 'Roboto'}} titleVariant='titleMedium' titleNumberOfLines={2} />
+                <Card.Cover style={{marginHorizontal: '2%'}} source={require('../assets/hero3.jpg')} />
+                <Card.Actions>
+                    <Button>Saiba mais</Button>
+                </Card.Actions>
+            </Card>
+        </ScrollView>
     ); 
 } 
  
-function SchedulingScreen() {
+function SchedulingScreen({navigation}) {
 
     const [date, setDate] = React.useState(undefined);
     const [open, setOpen] = React.useState(false);
@@ -64,7 +66,7 @@ function SchedulingScreen() {
                     Selecione uma data para a consulta
                 </Button>
                 <DatePickerModal
-                locale="en"
+                locale="pt"
                 mode="single"
                 visible={open}
                 onDismiss={onDismissSingle}
@@ -76,7 +78,7 @@ function SchedulingScreen() {
     ); 
 } 
  
-function NotificationsScreen() { 
+function NotificationsScreen({navigation}) { 
     return ( 
         <Products></Products>
     ); 
@@ -128,7 +130,8 @@ const styles = StyleSheet.create({
     container: { 
         flex: 1, 
         justifyContent: 'center', 
-        alignItems: 'center' 
+        alignItems: 'center',
+        overflow: 'scroll',
     }, 
     iconTabRound: { 
         width: 60, 

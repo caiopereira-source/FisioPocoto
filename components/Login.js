@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '75%',
-        marginBottom: 20
+        marginBottom: 20,
+        minWidth: '75%'
     },
     image: {
         width: 350,

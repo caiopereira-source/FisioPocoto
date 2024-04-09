@@ -108,7 +108,6 @@ export default function Products() {
     <View style={styles.container}>
       <TextInput
         placeholder="Nome"
-        left={<TextInput.Icon icon="cellphone" />}
         maxLength={40}
         style={styles.input}
         onChangeText={(texto) => setName(texto)}
@@ -119,7 +118,6 @@ export default function Products() {
  
       <TextInput
         placeholder="Marca"
-        left={<TextInput.Icon icon="apple" />}
         style={styles.input}
         onChangeText={(texto) => setBrand(texto)}
         value={brand}
@@ -129,7 +127,6 @@ export default function Products() {
  
       <TextInput
         placeholder="Tipo"
-        left={<TextInput.Icon icon="cellphone-dock" />}
         style={styles.input}
         onChangeText={(texto) => setType(texto)}
         value={type}
@@ -139,7 +136,6 @@ export default function Products() {
  
       <TextInput
         placeholder="Preço"
-        left={<TextInput.Icon icon="cellphone-dock" />}
         style={styles.input}
         onChangeText={(texto) => setCodebar(texto)}
         value={price}
