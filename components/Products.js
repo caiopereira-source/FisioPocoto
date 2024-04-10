@@ -103,6 +103,24 @@ export default function Products() {
     setType("");
     setPrice("");
   }
+
+  function handleDelete(key) {
+    firebase.database().ref('products').child(key).remove()
+      .then(() => {
+        const findProducts = products.filter(item => item.key !== key)
+        setProducts(findProducts)
+      })
+  }
+ 
+  //função para editar 
+  function handleEdit(data) {
+      setKey(data.key),
+      setName(data.name),
+      setBrand(data.brand),
+      setType(data.type),
+      setPrice(data.price)
+  }
+
  
   return (
     <View style={styles.container}>
@@ -112,6 +130,7 @@ export default function Products() {
         style={styles.input}
         onChangeText={(texto) => setName(texto)}
         value={name}
+        ref={inputRef}
       />
  
       <Separator />
@@ -121,6 +140,7 @@ export default function Products() {
         style={styles.input}
         onChangeText={(texto) => setBrand(texto)}
         value={brand}
+        ref={inputRef}
       />
  
       <Separator />
@@ -130,6 +150,7 @@ export default function Products() {
         style={styles.input}
         onChangeText={(texto) => setType(texto)}
         value={type}
+        ref={inputRef}
       />
  
       <Separator />
@@ -137,8 +158,9 @@ export default function Products() {
       <TextInput
         placeholder="Preço"
         style={styles.input}
-        onChangeText={(texto) => setCodebar(texto)}
+        onChangeText={(texto) => setPrice(texto)}
         value={price}
+        ref={inputRef}
       />
  
       <Separator />
@@ -164,8 +186,8 @@ export default function Products() {
           renderItem={({ item }) => (
             <ListProducts
               data={item}
-              deleteItem={'handleDelete'}
-              editItem={'handleEdit'}
+              deleteItem={handleDelete}
+              editItem={handleEdit}
             />
           )}
         />
