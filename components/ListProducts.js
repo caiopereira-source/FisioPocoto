@@ -1,7 +1,6 @@
 import React from 'react';
-
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
+import {Button} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
@@ -17,13 +16,13 @@ export default function listProducts({ data, deleteItem, editItem }) {
 
             <View style={styles.item}>
 
-                <TouchableOpacity onPress={() => deleteItem(data.key)}>
-                    <Icon name="trash" color="#A52A2A" size={20}>Excluir</Icon>
-                </TouchableOpacity>
+                <Button mode='elevated' onPress={() => deleteItem(data.key)}>
+                    <Icon name="trash" size={20}>Excluir</Icon>
+                </Button>
 
-                <TouchableOpacity onPress={() => editItem(data)}>
-                    <Icon name="create" color="blue" size={20}>Editar</Icon>
-                </TouchableOpacity>
+                <Button mode='contained' onPress={() => editItem(data)}>
+                    <Icon name="create" size={20}>Editar</Icon>
+                </Button>
 
             </View>
         </View>

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TextInput,
 } from "react-native";
+import {Button, Dialog, Portal, Text as PaperText, Snackbar} from 'react-native-paper'
 import firebase from "../services/connectionFirebase";
 import ListProducts from "./ListProducts";
  
@@ -25,7 +26,16 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const inputRef = useRef(null);
- 
+  const [visible, setVisible] = useState(false);
+  const [visibleSnackbar, setVisibleSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const onToggleSnackBar = () => setVisibleSnackbar(!visibleSnackbar);
+
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);
+
+
   useEffect(() => {
   async function search() {
  
@@ -76,7 +86,8 @@ export default function Products() {
       //para o teclado do celular fixo abaixo do formulário (não flutuante)
  
       Keyboard.dismiss();
-      alert("Produto Alterado!");
+      setSnackbarMessage('Produto Alterado!');
+      onToggleSnackBar();
       clearData();
       setKey("");
       return;
@@ -93,7 +104,8 @@ export default function Products() {
       price: price
     });
  
-    alert("Produto Inserido!");
+    setSnackbarMessage('Produto Cadastrado!')
+    onToggleSnackBar();
     clearData();
   }
  
@@ -107,8 +119,10 @@ export default function Products() {
   function handleDelete(key) {
     firebase.database().ref('products').child(key).remove()
       .then(() => {
-        const findProducts = products.filter(item => item.key !== key)
-        setProducts(findProducts)
+        const findProducts = products.filter(item => item.key !== key);
+        setProducts(findProducts);
+        setSnackbarMessage('Produto Excluído');
+        onToggleSnackBar();
       })
   }
  
@@ -172,6 +186,20 @@ export default function Products() {
       >
         <Text style={styles.buttonTextStyle}>Salvar</Text>
       </TouchableOpacity>
+    
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Excluir?</Dialog.Title>
+          <Dialog.Content>
+            <PaperText variant="bodyMedium" >Deseja mesmo excluir?</PaperText>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Sim</Button>
+            <Button onPress={hideDialog}>Não</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+
  
       <View>
         <Text style={styles.listar}>Listar Produtos</Text>
@@ -192,6 +220,17 @@ export default function Products() {
           )}
         />
       )}
+      <Snackbar
+      visible={visibleSnackbar}
+      onDismiss={onToggleSnackBar}
+      action={{
+        label: 'Fechar',
+        onPress: () => {
+        },
+      }}
+    >
+      {snackbarMessage}
+    </Snackbar>
     </View>
   );
 }
