@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import Icon from 'react-native-vector-icons/Feather';
 import Products from './Products';
+import DoctorRegistration from './doctorRegistration'
 
 
 function HomeScreen({navigation}) { 
@@ -82,6 +83,11 @@ function NotificationsScreen({navigation}) {
     return ( 
         <Products></Products>
     ); 
+}
+function DoctorRegistrationScreen({navigation}) { 
+        return ( 
+            <DoctorRegistration></DoctorRegistration>
+        ); 
 } 
  
 const Tab = createBottomTabNavigator(); 
@@ -104,6 +110,9 @@ export default function Menu() {
                             case 'Notificações': 
                                 iconName = 'bell'; 
                                 break; 
+                            case 'Médicos': 
+                                iconName = 'users'; 
+                                break; 
                             default: 
                                 iconName = 'add-circle-outline'; 
                                 break; 
@@ -120,7 +129,8 @@ export default function Menu() {
             > 
                 <Tab.Screen name="Home" component={HomeScreen} /> 
                 <Tab.Screen name="Agendamento" component={SchedulingScreen} />  
-                <Tab.Screen name="Notificações" component={NotificationsScreen} /> 
+                <Tab.Screen name="Notificações" component={NotificationsScreen} />
+                <Tab.Screen name="Médicos" component={DoctorRegistrationScreen} /> 
                 </Tab.Navigator> 
         </NavigationContainer> 
     ); 
