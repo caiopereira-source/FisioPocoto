@@ -8,7 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, StyleSheet, Text} from 'react-native'; 
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Products from './Products';
 import DoctorRegistration from './doctorRegistration'
 
@@ -111,7 +111,7 @@ export default function Menu() {
                                 iconName = 'bell'; 
                                 break; 
                             case 'Médicos': 
-                                iconName = 'users'; 
+                                iconName = 'hospital-box'; 
                                 break; 
                             default: 
                                 iconName = 'add-circle-outline'; 

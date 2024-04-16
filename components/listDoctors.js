@@ -1,70 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import {Button} from 'react-native-paper'
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import {Button, Text, Card} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ScrollView } from 'react-native-web';
 
 
 export default function listDoctors({ data, deleteItem, editItem }) {
     return (
 
-        <View style={styles.container}>
-
-            <Text style={styles.text}>Nome: {data.name}</Text>
-            <Text style={styles.text}>CPF: {data.cpf}</Text>
-            <Text style={styles.text}>CFM: {data.cfm}</Text>
-            <Text style={styles.text}>Área de Atuação(R$): {data.medicalArea}</Text>
-
-            <View style={styles.item}>
-
-                <Button mode='elevated' onPress={() => deleteItem(data.key)}>
-                    <Icon name="trash" size={20}>Excluir</Icon>
-                </Button>
-
-                <Button mode='contained' onPress={() => editItem(data)}>
-                    <Icon name="create" size={20}>Editar</Icon>
-                </Button>
-
-            </View>
+        <View>
+            <Card mode='contained' style={{padding: '1%', margin: '2%'}}>
+                <Card.Content>
+                <Text variant="bodyLarge"><Text variant='bodyLarge' style={{fontWeight: '700'}}>Nome:</Text> {data.name}</Text>
+                <Text variant="bodyLarge"><Text variant='bodyLarge' style={{fontWeight: '700'}}>CPF:</Text> {data.cpf}</Text>
+                <Text variant="bodyLarge"><Text variant='bodyLarge' style={{fontWeight: '700'}}>CFM:</Text> {data.cfm}</Text>
+                <Text variant="bodyLarge"><Text variant='bodyLarge' style={{fontWeight: '700'}}>Área de Atuação:</Text> {data.medicalArea}</Text>
+                </Card.Content>
+                <Card.Actions>
+                <Button onPress={() => deleteItem(data.key)}>Excluir</Button>
+                <Button onPress={() => editItem(data)}>Editar</Button>
+                </Card.Actions>
+            </Card>
         </View>
 
     )
 
 }
-
-
-
-const styles = StyleSheet.create({
-
-    container: {
-
-        flex: 1,
-
-        marginTop: 10,
-
-        marginBottom: 5,
-
-        padding: 10,
-
-        backgroundColor: '#FAFAD2',
-
-    },
-
-    text: {
-
-        color: 'black',
-
-        fontSize: 17
-
-    },
-
-    item: {
-
-        flex: 1,
-
-        flexDirection: 'row',
-
-        justifyContent: 'space-around'
-
-    }
-
-}); 

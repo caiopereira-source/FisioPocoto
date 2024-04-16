@@ -3,13 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Keyboard,
   FlatList,
   ActivityIndicator,
-  TextInput,
 } from "react-native";
-import {Button, Dialog, Portal, Text as PaperText, Snackbar} from 'react-native-paper'
+import {Button, Dialog, Portal, Text as PaperText, Snackbar, TextInput, Card} from 'react-native-paper'
+import { ScrollView } from "react-native";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from "../services/connectionFirebase";
 import ListDoctors from "./listDoctors";
  
@@ -152,10 +152,12 @@ export default function Doctors() {
  
   return (
     <View style={styles.container}>
+      <PaperText variant="titleLarge" style={{marginTop: '2%'}}>Registro de Médicos Colaboradores</PaperText>
       <TextInput
+        style={{marginTop: '5%'}}
         placeholder="Nome"
-        maxLength={40}
-        style={styles.input}
+        maxLength={80}
+        left={<TextInput.Icon icon="pencil" />}
         onChangeText={(texto) => setName(texto)}
         value={name}
         ref={inputRef}
@@ -165,7 +167,7 @@ export default function Doctors() {
  
       <TextInput
         placeholder="CPF"
-        style={styles.input}
+        left={<TextInput.Icon icon="id-card" />}
         onChangeText={(texto) => setCpf(texto)}
         value={cpf}
         ref={inputRef}
@@ -175,7 +177,7 @@ export default function Doctors() {
  
       <TextInput
         placeholder="CFM"
-        style={styles.input}
+        left={<TextInput.Icon icon="stethoscope" />}
         onChangeText={(texto) => setCfm(texto)}
         value={cfm}
         ref={inputRef}
@@ -185,7 +187,8 @@ export default function Doctors() {
  
       <TextInput
         placeholder="Área de Atuação"
-        style={styles.input}
+        style={{marginBottom: '3%'}}
+        left={<TextInput.Icon icon="medical-bag" />}
         onChangeText={(texto) => setMedicalArea(texto)}
         value={medicalArea}
         ref={inputRef}
@@ -193,13 +196,9 @@ export default function Doctors() {
  
       <Separator />
  
-      <TouchableOpacity
-        onPress={insertUpdate}
-        style={styles.button}
-        activeOpacity={0.5}
-      >
-        <Text style={styles.buttonTextStyle}>Salvar</Text>
-      </TouchableOpacity>
+      <Button onPress={insertUpdate} mode="contained">
+        <Icon name="" size={20}>Salvar</Icon>
+      </Button>
     
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
@@ -215,12 +214,12 @@ export default function Doctors() {
       </Portal>
 
  
-      <View>
-        <Text style={styles.listar}>Listagem de Colaboradores</Text>
-      </View>
+      <ScrollView>
+        <Card mode="elevated" style={{ marginTop: '10%', marginHorizontal: '2%', minHeight: '100%'}}>
+          <PaperText variant="titleLarge" style={{textAlign: "center", padding: '2%', marginTop: '2%'}} >Lista de Colaboradores</PaperText>
  
       {loading ? (
-        <ActivityIndicator color="#121212" size={45} />
+        <ActivityIndicator color="#121212" style={{marginVertical: '15%'}} size={45} />
       ) : (
         <FlatList
           keyExtractor={(item) => item.key}
@@ -234,6 +233,8 @@ export default function Doctors() {
           )}
         />
       )}
+      </Card>
+      </ScrollView>
       <Snackbar
       visible={visibleSnackbar}
       onDismiss={onToggleSnackBar}
