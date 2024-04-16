@@ -11,13 +11,13 @@ import {Button, Dialog, Portal, Text as PaperText, Snackbar, TextInput, Card} fr
 import { ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import firebase from "../services/connectionFirebase";
-import ListDoctors from "./listDoctors";
+import ListClinics from "./listClinics";
  
 const Separator = () => {
   return <View style={styles.separator} />;
 };
  
-export default function Doctors() {
+export default function  Clinics() {
   /* const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [type, setType] = useState("");
@@ -25,13 +25,14 @@ export default function Doctors() {
   const [key, setKey] = useState(""); */
 
   const [key, setKey] = useState("");
-  const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [cfm, setCfm] = useState("");
-  const [medicalArea, setMedicalArea] = useState("");
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [manager, setManager] = useState("");
+  const [city, setCity] = useState("");
+
   const [deletingKey, setDeletingKey] = useState("");
 
-  const [doctors, setDoctors] = useState([]);
+  const [clinics, setClinics] = useState([]);
   const [loading, setLoading] = useState(true);
   const inputRef = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -51,23 +52,23 @@ export default function Doctors() {
   useEffect(() => {
   async function search() {
  
-    await firebase.database().ref('doctors').on('value', (snapshot) => {
-      setDoctors([]);
+    await firebase.database().ref('clinics').on('value', (snapshot) => {
+      setClinics([]);
       snapshot.forEach((chilItem) => {
  
         let data = {
           //de acordo com a chave de cada item busca os valores
           //cadastrados na relação e atribui nos dados
-          key: chilItem.key,
-          name: chilItem.val().name,
-          cpf: chilItem.val().cpf,
-          cfm: chilItem.val().cfm,
-          medicalArea: chilItem.val().medicalArea,
+          key: chilItem.val().key,
+          address: chilItem.address,
+          zipcode: chilItem.val().zipcode,
+          manager: chilItem.val().manager,
+          city: chilItem.val().city,
           
  
         };
  
-        setDoctors(oldArray => [...oldArray, data].reverse());
+        setClinics(oldArray => [...oldArray, data].reverse());
       })
       setLoading(false);
     })
@@ -81,24 +82,24 @@ export default function Doctors() {
     //editar dados
  
     if (
-      (name !== "") &
-      (cpf !== "") &
-      (cfm !== "") &
-      (medicalArea !== "") &
+      (address !== "") &
+      (zipcode !== "") &
+      (manager !== "") &
+      (city !== "") &
       (key !== "")
     ) {
-      firebase.database().ref("doctors").child(key).update({
-        name: name,
-        cpf: cpf,
-        cfm: cfm,
-        medicalArea: medicalArea,
+      firebase.database().ref("clinics").child(key).update({
+        address: address,
+        zipcode: zipcode,
+        manager: manager,
+        city: city,
         
       });
  
       //para o teclado do celular fixo abaixo do formulário (não flutuante)
  
       Keyboard.dismiss();
-      setSnackbarMessage('Registro de Médico Alterado!');
+      setSnackbarMessage('Informações de Consultório Alterado!');
       onToggleSnackBar();
       clearData();
       setKey("");
@@ -107,34 +108,34 @@ export default function Doctors() {
  
     //cadastrar dados - insert
  
-    let prod = await firebase.database().ref("doctors"); //usar o await quando usar uma async function
+    let prod = await firebase.database().ref("clinics"); //usar o await quando usar uma async function
     let keyprod = prod.push().key; //cadastar os dados - inserção gerando uma chave
     prod.child(keyprod).set({
-        name: name,
-        cpf: cpf,
-        cfm: cfm,
-        medicalArea: medicalArea,
+      address: address,
+      zipcode: zipcode,
+      manager: manager,
+      city: city,
     });
  
-    setSnackbarMessage('Registro de Médico Cadastrado!')
+    setSnackbarMessage('Informações de Consultório Cadastrados!')
     onToggleSnackBar();
     clearData();
   }
  
   function clearData() {
-    setName("");
-    setCpf("");
-    setCfm("");
-    setMedicalArea("");
+    setAddress("");
+    setZipcode("");
+    setManager("");
+    setCity("");
   }
 
   function handleDelete(key) {
-    firebase.database().ref('doctors').child(key).remove()
+    firebase.database().ref('clinics').child(key).remove()
       .then(() => {
-        const findDoctors = doctors.filter(item => item.key !== key);
-        setDoctors(findDoctors);
+        const findClinics = doctors.filter(item => item.key !== key);
+        setClinics(findClinics);
         setDeletingKey(null);
-        setSnackbarMessage('Registro de Médico Excluído');
+        setSnackbarMessage('Registro de Consultório Excluído');
         onToggleSnackBar();
         hideDialog();
       })
@@ -143,55 +144,55 @@ export default function Doctors() {
   //função para editar 
   function handleEdit(data) {
       setKey(data.key),
-      setName(data.name),
-      setCpf(data.cpf),
-      setCfm(data.cfm),
-      setMedicalArea(data.medicalArea)
+      setAddress(data.address),
+      setZipcode(data.zipcode),
+      setManager(data.manager),
+      setCity(data.city)
   }
 
  
   return (
     <View style={styles.container}>
-      <PaperText variant="titleLarge" style={{marginTop: '2%'}}>Registro de Médicos Colaboradores</PaperText>
+      <PaperText variant="titleLarge" style={{marginTop: '2%'}}>Registro de Consultórios</PaperText>
       <View></View>
       <TextInput
         style={{marginTop: '5%'}}
-        placeholder="Nome"
+        placeholder="Endereço"
         maxLength={80}
-        left={<TextInput.Icon icon="pencil" />}
-        onChangeText={(texto) => setName(texto)}
-        value={name}
+        left={<TextInput.Icon icon="home" />}
+        onChangeText={(texto) => setAddress(texto)}
+        value={address}
         ref={inputRef}
       />
  
       <Separator />
  
       <TextInput
-        placeholder="CPF"
-        left={<TextInput.Icon icon="id-card" />}
-        onChangeText={(texto) => setCpf(texto)}
-        value={cpf}
+        placeholder="CEP"
+        left={<TextInput.Icon icon="email" />}
+        onChangeText={(texto) => setZipcode(texto)}
+        value={zipcode}
         ref={inputRef}
       />
  
       <Separator />
  
       <TextInput
-        placeholder="CFM"
-        left={<TextInput.Icon icon="stethoscope" />}
-        onChangeText={(texto) => setCfm(texto)}
-        value={cfm}
+        placeholder="Gerente Responsável"
+        left={<TextInput.Icon icon="account" />}
+        onChangeText={(texto) => setManager(texto)}
+        value={manager}
         ref={inputRef}
       />
  
       <Separator />
  
       <TextInput
-        placeholder="Área de Atuação"
+        placeholder="Cidade"
         style={{marginBottom: '3%'}}
-        left={<TextInput.Icon icon="medical-bag" />}
-        onChangeText={(texto) => setMedicalArea(texto)}
-        value={medicalArea}
+        left={<TextInput.Icon icon="city-variant" />}
+        onChangeText={(texto) => setCity(texto)}
+        value={city}
         ref={inputRef}
       />
  
@@ -217,16 +218,16 @@ export default function Doctors() {
  
       <ScrollView>
         <Card mode="elevated" style={{ marginTop: '10%', marginHorizontal: '2%', minHeight: '100%'}}>
-          <PaperText variant="titleLarge" style={{textAlign: "center", padding: '2%', marginTop: '2%'}} >Lista de Colaboradores</PaperText>
+          <PaperText variant="titleLarge" style={{textAlign: "center", padding: '2%', marginTop: '2%'}} >Lista de Consultórios</PaperText>
  
       {loading ? (
         <ActivityIndicator color="#121212" style={{marginVertical: '15%'}} size={45} />
       ) : (
         <FlatList
           keyExtractor={(item) => item.key}
-          data={doctors}
+          data={clinics}
           renderItem={({ item }) => (
-            <ListDoctors
+            <ListClinics
               data={item}
               deleteItem={showDialog}
               editItem={handleEdit}

@@ -9,7 +9,7 @@ import { View, StyleSheet, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Products from './Products';
+import ClinicRegistration from './clinicRegistration';
 import DoctorRegistration from './doctorRegistration'
 
 
@@ -81,14 +81,20 @@ function SchedulingScreen({navigation}) {
  
 function NotificationsScreen({navigation}) { 
     return ( 
-        <Products></Products>
+        <View style={styles.container}></View>
     ); 
 }
 function DoctorRegistrationScreen({navigation}) { 
         return ( 
             <DoctorRegistration></DoctorRegistration>
         ); 
-} 
+}
+
+function ClinicRegistrationScreen({navigation}) { 
+    return ( 
+        <ClinicRegistration></ClinicRegistration>
+    ); 
+}
  
 const Tab = createBottomTabNavigator(); 
  
@@ -112,6 +118,9 @@ export default function Menu() {
                                 break; 
                             case 'Médicos': 
                                 iconName = 'hospital-box'; 
+                                break;
+                            case 'Consultórios': 
+                                iconName = 'hospital-building'; 
                                 break; 
                             default: 
                                 iconName = 'add-circle-outline'; 
@@ -129,8 +138,9 @@ export default function Menu() {
             > 
                 <Tab.Screen name="Home" component={HomeScreen} /> 
                 <Tab.Screen name="Agendamento" component={SchedulingScreen} />  
+                <Tab.Screen name="Médicos" component={DoctorRegistrationScreen} />
+                <Tab.Screen name="Consultórios" component={ClinicRegistrationScreen} />
                 <Tab.Screen name="Notificações" component={NotificationsScreen} />
-                <Tab.Screen name="Médicos" component={DoctorRegistrationScreen} /> 
                 </Tab.Navigator> 
         </NavigationContainer> 
     ); 
@@ -142,6 +152,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
         overflow: 'scroll',
+        fontFamily: 'Quicksand'
     }, 
     iconTabRound: { 
         width: 60, 
