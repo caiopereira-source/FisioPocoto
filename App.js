@@ -53,9 +53,9 @@ export default function App() {
   }
 
   return (
-    //<PaperProvider theme={theme}>
-     // {!user ? <Login changeStatus={(user) => setUser(user)} /> : <MenuTab/>}
-    //</PaperProvider>
+    /* <PaperProvider theme={theme}>
+      {!user ? <Login changeStatus={(user) => setUser(user)} /> : <MenuTab/>}
+    </PaperProvider> */
     <PaperProvider theme={theme}><MenuTab/></PaperProvider>
   );
 }

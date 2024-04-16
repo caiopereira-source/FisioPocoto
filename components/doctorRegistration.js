@@ -29,6 +29,7 @@ export default function Doctors() {
   const [cpf, setCpf] = useState("");
   const [cfm, setCfm] = useState("");
   const [medicalArea, setMedicalArea] = useState("");
+  const [deletingKey, setDeletingKey] = useState("");
 
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +40,11 @@ export default function Doctors() {
 
   const onToggleSnackBar = () => setVisibleSnackbar(!visibleSnackbar);
 
-  const showDialog = () => setVisible(true);
+  const showDialog = (key) => {
+      setDeletingKey(key);
+      setVisible(true);
+    }
+
   const hideDialog = () => setVisible(false);
 
 
@@ -128,8 +133,10 @@ export default function Doctors() {
       .then(() => {
         const findDoctors = doctors.filter(item => item.key !== key);
         setDoctors(findDoctors);
+        setDeletingKey(null);
         setSnackbarMessage('Registro de Médico Excluído');
         onToggleSnackBar();
+        hideDialog();
       })
   }
  
@@ -201,8 +208,8 @@ export default function Doctors() {
             <PaperText variant="bodyMedium" >Deseja mesmo excluir?</PaperText>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Sim</Button>
-            <Button onPress={hideDialog}>Não</Button>
+            <Button onPress={() => handleDelete(deletingKey)}>Confirmar</Button>
+            <Button onPress={hideDialog}>Cancelar</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -221,7 +228,7 @@ export default function Doctors() {
           renderItem={({ item }) => (
             <ListDoctors
               data={item}
-              deleteItem={handleDelete}
+              deleteItem={showDialog}
               editItem={handleEdit}
             />
           )}
