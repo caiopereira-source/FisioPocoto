@@ -140,7 +140,7 @@ export default function Menu() {
                 <Tab.Screen name="Agendamento" component={SchedulingScreen} />  
                 <Tab.Screen name="Médicos" component={DoctorRegistrationScreen} />
                 <Tab.Screen name="Consultórios" component={ClinicRegistrationScreen} />
-                <Tab.Screen name="Notificações" component={NotificationsScreen} />
+                {/* <Tab.Screen name="Notificações" component={NotificationsScreen} /> */}
                 </Tab.Navigator> 
         </NavigationContainer> 
     ); 

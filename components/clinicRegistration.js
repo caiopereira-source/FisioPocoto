@@ -59,8 +59,8 @@ export default function  Clinics() {
         let data = {
           //de acordo com a chave de cada item busca os valores
           //cadastrados na relação e atribui nos dados
-          key: chilItem.val().key,
-          address: chilItem.address,
+          key: chilItem.key,
+          address: chilItem.val().address,
           zipcode: chilItem.val().zipcode,
           manager: chilItem.val().manager,
           city: chilItem.val().city,
@@ -132,7 +132,7 @@ export default function  Clinics() {
   function handleDelete(key) {
     firebase.database().ref('clinics').child(key).remove()
       .then(() => {
-        const findClinics = doctors.filter(item => item.key !== key);
+        const findClinics = clinics.filter(item => item.key !== key);
         setClinics(findClinics);
         setDeletingKey(null);
         setSnackbarMessage('Registro de Consultório Excluído');
