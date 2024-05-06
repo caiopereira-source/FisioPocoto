@@ -50,9 +50,9 @@ export default function  Clinics() {
   const hideDialog = () => setVisible(false);
 
   function validForm(){
-    if((address === "") &
-      (zipcode	 === "") &
-      (manager === "") &
+    if((address === "") ||
+      (zipcode	 === "") ||
+      (manager === "") ||
       (city === "")
       ){
         setSnackbarMessage("Formulário Inválido! Verifique e corrija");

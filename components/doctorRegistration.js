@@ -50,9 +50,9 @@ export default function Doctors() {
   const hideDialog = () => setVisible(false);
   
   function validForm(){
-    if((name === "") &
-      (cpf === "") &
-      (cfm === "") &
+    if((name === "") ||
+      (cpf === "") ||
+      (cfm === "") ||
       (medicalArea === "")
       ){
         setSnackbarMessage("Formulário Inválido! Verifique e corrija");
@@ -117,6 +117,7 @@ export default function Doctors() {
       Keyboard.dismiss();
       setSnackbarMessage('Registro de Médico Alterado!');
       onToggleSnackBar();
+      setFormError(false);
       clearData();
       setKey("");
       return;
@@ -136,6 +137,7 @@ export default function Doctors() {
  
     setSnackbarMessage('Registro de Médico Cadastrado!')
     onToggleSnackBar();
+    setFormError(false);
     clearData();
     }
   }
