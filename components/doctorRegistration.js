@@ -37,6 +37,8 @@ export default function Doctors() {
   const [visible, setVisible] = useState(false);
   const [visibleSnackbar, setVisibleSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [formError, setFormError] = useState(false);
+  
 
   const onToggleSnackBar = () => setVisibleSnackbar(!visibleSnackbar);
 
@@ -46,7 +48,20 @@ export default function Doctors() {
     }
 
   const hideDialog = () => setVisible(false);
-
+  
+  function validForm(){
+    if((name === "") &
+      (cpf === "") &
+      (cfm === "") &
+      (medicalArea === "")
+      ){
+        setSnackbarMessage("Formulário Inválido! Verifique e corrija");
+        onToggleSnackBar();
+        setFormError(true);
+        return false;
+    }
+    return true;
+  }
 
   useEffect(() => {
   async function search() {
@@ -78,14 +93,16 @@ export default function Doctors() {
   //método para inserir ou alterar os dados na coleção bike
  
   async function insertUpdate() {
+    
+    
     //editar dados
- 
     if (
       (name !== "") &
       (cpf !== "") &
       (cfm !== "") &
       (medicalArea !== "") &
-      (key !== "")
+      (key !== "") &
+      (validForm())
     ) {
       firebase.database().ref("doctors").child(key).update({
         name: name,
@@ -106,7 +123,8 @@ export default function Doctors() {
     }
  
     //cadastrar dados - insert
- 
+    if(validForm()){
+
     let prod = await firebase.database().ref("doctors"); //usar o await quando usar uma async function
     let keyprod = prod.push().key; //cadastar os dados - inserção gerando uma chave
     prod.child(keyprod).set({
@@ -119,6 +137,7 @@ export default function Doctors() {
     setSnackbarMessage('Registro de Médico Cadastrado!')
     onToggleSnackBar();
     clearData();
+    }
   }
  
   function clearData() {
@@ -162,6 +181,7 @@ export default function Doctors() {
         onChangeText={(texto) => setName(texto)}
         value={name}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -172,6 +192,7 @@ export default function Doctors() {
         onChangeText={(texto) => setCpf(texto)}
         value={cpf}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -182,6 +203,7 @@ export default function Doctors() {
         onChangeText={(texto) => setCfm(texto)}
         value={cfm}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -193,6 +215,7 @@ export default function Doctors() {
         onChangeText={(texto) => setMedicalArea(texto)}
         value={medicalArea}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />

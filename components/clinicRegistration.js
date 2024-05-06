@@ -29,6 +29,7 @@ export default function  Clinics() {
   const [zipcode, setZipcode] = useState("");
   const [manager, setManager] = useState("");
   const [city, setCity] = useState("");
+  const [formError, setFormError] = useState(false);
 
   const [deletingKey, setDeletingKey] = useState("");
 
@@ -48,6 +49,19 @@ export default function  Clinics() {
 
   const hideDialog = () => setVisible(false);
 
+  function validForm(){
+    if((address === "") &
+      (zipcode	 === "") &
+      (manager === "") &
+      (city === "")
+      ){
+        setSnackbarMessage("Formulário Inválido! Verifique e corrija");
+        onToggleSnackBar();
+        setFormError(true);
+        return false;
+    }
+    return true;
+  }
 
   useEffect(() => {
   async function search() {
@@ -86,7 +100,8 @@ export default function  Clinics() {
       (zipcode !== "") &
       (manager !== "") &
       (city !== "") &
-      (key !== "")
+      (key !== "") &
+      (validForm())
     ) {
       firebase.database().ref("clinics").child(key).update({
         address: address,
@@ -107,7 +122,7 @@ export default function  Clinics() {
     }
  
     //cadastrar dados - insert
- 
+    if(validForm()){
     let prod = await firebase.database().ref("clinics"); //usar o await quando usar uma async function
     let keyprod = prod.push().key; //cadastar os dados - inserção gerando uma chave
     prod.child(keyprod).set({
@@ -120,6 +135,7 @@ export default function  Clinics() {
     setSnackbarMessage('Informações de Consultório Cadastrados!')
     onToggleSnackBar();
     clearData();
+    }
   }
  
   function clearData() {
@@ -163,6 +179,7 @@ export default function  Clinics() {
         onChangeText={(texto) => setAddress(texto)}
         value={address}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -173,6 +190,7 @@ export default function  Clinics() {
         onChangeText={(texto) => setZipcode(texto)}
         value={zipcode}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -183,6 +201,7 @@ export default function  Clinics() {
         onChangeText={(texto) => setManager(texto)}
         value={manager}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
@@ -194,6 +213,7 @@ export default function  Clinics() {
         onChangeText={(texto) => setCity(texto)}
         value={city}
         ref={inputRef}
+        error={formError}
       />
  
       <Separator />
