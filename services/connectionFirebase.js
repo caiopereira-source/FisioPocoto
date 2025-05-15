@@ -2,21 +2,15 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
 
-let firebaseConfig = {
+const firebaseConfig = {
+  apiKey: "FIREBASE_API_KEY",
+  authDomain: "FIREBASE_AUTH_DOMAIN",
+  projectId: "FIREBASE_PROJECT_ID",
+  storageBucket: "FIREBASE_STORAGE_BUCKET",
+  messagingSenderId: "FIREBASE_MESSAGING_SENDER_ID",
+  appId: "FIREBASE_APP_ID",
+};
 
-    apiKey: "AIzaSyBbGg8BFFWr69n-zS_lYZ0kxSxz05Xmiro",
-  
-    authDomain: "bdboerzo.firebaseapp.com",
-  
-    projectId: "bdboerzo",
-  
-    storageBucket: "bdboerzo.appspot.com",
-  
-    messagingSenderId: "149972768326",
-  
-    appId: "1:149972768326:web:7df24f53d98497b68f9c47"
-  
-  };
   
 
   if (!firebase.apps.length) {

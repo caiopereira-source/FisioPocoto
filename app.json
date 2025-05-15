@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "appAtividade1",
     "slug": "appAtividade1",
     "version": "1.0.0",
@@ -26,5 +27,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
+    
   }
 }
