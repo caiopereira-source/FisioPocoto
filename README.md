@@ -19,7 +19,7 @@ Fisio Pocotó é um app mobile criado para agendamento de consultas com fisioter
 
 ## 🚀 Como rodar?
 
-> **Atenção:** As credenciais do Firebase foram removidas por segurança, então algumas funcionalidades podem não funcionar 100% no seu ambiente local.
+> **Atenção:** As credenciais do Firebase desse projeto foram descontinuadas, então algumas funcionalidades podem não funcionar 100% no seu ambiente local.
 
 Mesmo assim, para fins educacionais ou curiosidade:
 
